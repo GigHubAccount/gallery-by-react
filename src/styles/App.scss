@@ -1,0 +1,149 @@
+html,body{
+  width:100%;
+  height:100%;
+  background-color:#222;
+}
+
+
+.content{
+  width:100%;
+  height:100%;
+}
+
+/*stage -- start*/
+.stage{
+  position:relative;
+
+  width:100%;
+  height:680px;
+}
+/*stage -- end*/
+
+/*image -- start*/
+.image-sec{
+  position:relative;/*方便后面定位图片*/
+
+  width:100%;
+  height:100%;
+
+  overflow:hidden;/*图片超出的要隐藏*/
+
+  backgriound-color:#ddd;/*浅灰*/
+
+  perspective:1800px;/*舞台背景透视*/
+
+  @at-root{
+    .img-figure{
+      position:absolute;
+
+      width:320px;
+      height:360px;
+      margin:0;
+      padding:40px;
+
+      background-color:#fff;
+
+      box-sizing:border-box;
+      cursor:pointer;/*鼠标指针形状*/
+
+      transform-origin:0 50% 0;/%旋转中心线是左线*/
+      transform-style:preserve-3d;
+      transition:transform .6s ease-in-out,left .6s ease-in-out,top .6s ease-in-out;
+      &.isInverse{
+        transform:translate(320px) rotateY(180def);
+      }
+
+      figcpation{
+        text-align:center;
+
+        .img-title{
+          margin:20px 0 0 0 ;
+          color:#a7a0a2;/*浅灰*/
+          font-size:16px;
+        }
+
+        .img-back{
+          position:absolute;
+          top:0;
+          left:0;
+
+          width:100%;
+          height:100%;
+
+          padding:50px 40px;
+          overflow:auto;
+
+          color:#a7a0a2;
+          font-size:22px;
+          line-height:1.25;
+          text-align:center;
+          background-color:#fff;
+          box-sizing:border-box;
+          /*先开始时.img-back，旋转了180度，因为translateZ（1px），位于正面图像的下方*/
+          /*当.img-figure旋转时，.img-back又旋转了180度，旋转读书为360，因为translateZ（1px)，位于正面图像的上方*/
+          transform:rotateY(180deg) translate(1px);
+          /*translageZ(1px)是为了结局Safari的bug*/
+          backface-visibility:hidden;
+        }
+      }
+    }
+  }
+
+  /*将图片尺寸变为240px*240px*/
+  .img-figure img{
+    width:240px;
+    height:240px;
+  }
+
+}
+/*image -- end*/
+
+
+/*controller-- start*/
+.controller-nav{
+  position:absulote;//绝对定位到舞台底部
+  left：0;
+  bottom:30px;//距离舞台底部
+  z-index:101;//以便控制按钮能在图片的上面10的二次方级的z-index
+
+  width:100%;
+  text-align:center;//让其中的单个按钮能够居中显示
+
+  @at-root{
+    .controller-unit{
+      display:inline-block;
+      margin:0 5px;
+      width:30px;
+      height:30px;
+
+      text-align:center;
+      vertical-align:middle;//垂直居中对齐
+
+      cursor:pointer;
+      background-color:#aaa;
+      boder-radius:50%;
+
+      transform:scale(.5);
+      transition:transform .6s ease-in-out,background-color .3s;
+
+      &::after{
+        color:#fff;
+        font-family:"icons-turn-arrow";
+        font-size:80%;
+        line-height:30px;
+
+        content:"\e600";
+
+        -webkit-font-smoothing:antialiased;
+        -moz-font-smoothing:grayscale;
+      }
+
+      &.is-inverse{
+        background-color;#555;
+
+        transform:rotateY(180deg);
+      }
+    }
+  }
+}
+/*controller-- end*/
