@@ -1,36 +1,37 @@
-html,body{
-  width:100%;
-  height:100%;
-  background-color:#222;
+@font-face{
+  font-family:"icons-turn-arraw";
+  src:url("../fonts/icons/turn-arrow.woff") format("woff");
 }
+html,body{
+  background-color:#222;
+  width:100%;//--我刚添加了宽和高2017年7月14日16:42:27
+  height:100%;
+}
+
 
 
 .content{
   width:100%;
-  height:100%;
+  height:100%;  
 }
 
 /*stage -- start*/
 .stage{
-  position:relative;
-
+  position:relative;//方便定位controller div
   width:100%;
-  height:680px;
+  height:680px;//--高为100%
 }
 /*stage -- end*/
 
+
 /*image -- start*/
-.image-sec{
-  position:relative;/*方便后面定位图片*/
-
+.img-sec{
+  position:relative;//方便定位图片
   width:100%;
-  height:100%;
-
-  overflow:hidden;/*图片超出的要隐藏*/
-
-  backgriound-color:#ddd;/*浅灰*/
-
-  perspective:1800px;/*舞台背景透视*/
+  height:100%; 
+  overflow:hidden;//图片超出范围要隐藏
+  background-color:#ddd;
+  perspective: 1800px;//使用了auto-prefisher-loaer会自动在perspective的前面添加-webkit-
 
   @at-root{
     .img-figure{
@@ -44,106 +45,107 @@ html,body{
       background-color:#fff;
 
       box-sizing:border-box;
-      cursor:pointer;/*鼠标指针形状*/
-
-      transform-origin:0 50% 0;/%旋转中心线是左线*/
-      transform-style:preserve-3d;
+      cursor:pointer;
+      transform-origin:0 50% 0;//x(默认50%) y（50%） z（0）
+      tansfrom-style:preserve-3d;
       transition:transform .6s ease-in-out,left .6s ease-in-out,top .6s ease-in-out;
-      &.isInverse{
-        transform:translate(320px) rotateY(180def);
-      }
+      
 
-      figcpation{
-        text-align:center;
 
-        .img-title{
-          margin:20px 0 0 0 ;
-          color:#a7a0a2;/*浅灰*/
-          font-size:16px;
-        }
-
-        .img-back{
-          position:absolute;
-          top:0;
-          left:0;
-
-          width:100%;
-          height:100%;
-
-          padding:50px 40px;
-          overflow:auto;
-
-          color:#a7a0a2;
-          font-size:22px;
-          line-height:1.25;
-          text-align:center;
-          background-color:#fff;
-          box-sizing:border-box;
-          /*先开始时.img-back，旋转了180度，因为translateZ（1px），位于正面图像的下方*/
-          /*当.img-figure旋转时，.img-back又旋转了180度，旋转读书为360，因为translateZ（1px)，位于正面图像的上方*/
-          transform:rotateY(180deg) translate(1px);
-          /*translageZ(1px)是为了结局Safari的bug*/
-          backface-visibility:hidden;
-        }
+      &.is-inverse{
+        transform:translate(320px) rotateY(180deg);
       }
     }
-  }
+    figcaption{
+      text-align:center;
 
-  /*将图片尺寸变为240px*240px*/
-  .img-figure img{
-    width:240px;
-    height:240px;
-  }
+      .img-title{
+        margin:20px 0 0 0;
+        color:#a7a0a2;
+        font-size:16px;
+      }
 
+      .img-back{
+        position:absolute;
+        top:0;
+        left:0;
+
+        width:100%;
+        height:100%;
+
+        padding:50px 40px;
+        overflow:auto;
+
+        color:#a7a0a2;
+        font-size:22px;
+        line-height:1.25;
+        text-align:left;
+        background-color:#fff;
+
+        box-sizing:border-box;
+        tansform:rotateY(180deg) translateZ(1px);
+        backface-visibility:hidden;
+        p{
+          margin:0;
+        }
+      }
+
+
+    }
+  }
 }
 /*image -- end*/
 
 
-/*controller-- start*/
-.controller-nav{
-  position:absulote;//绝对定位到舞台底部
-  left：0;
-  bottom:30px;//距离舞台底部
-  z-index:101;//以便控制按钮能在图片的上面10的二次方级的z-index
 
+
+/*controller  -- start*/
+.controller-nav{
+  position:absolute;
+  left:0;
+  bottom:30px;
+  z-index:101;
   width:100%;
-  text-align:center;//让其中的单个按钮能够居中显示
+  text-align:center;
 
   @at-root{
     .controller-unit{
       display:inline-block;
-      margin:0 5px;
+      margin: 0 5px;
       width:30px;
       height:30px;
-
       text-align:center;
-      vertical-align:middle;//垂直居中对齐
+      vertical-align:middle;
 
       cursor:pointer;
       background-color:#aaa;
-      boder-radius:50%;
-
+      border-radius:50%;
       transform:scale(.5);
+
       transition:transform .6s ease-in-out,background-color .3s;
 
-      &::after{
-        color:#fff;
-        font-family:"icons-turn-arrow";
-        font-size:80%;
-        line-height:30px;
+      &.is-center{
+        transform:scale(1);
+        background-color:#888;
 
-        content:"\e600";
+        &::after{
+          color:#fff;
+          font-family:"icons-turn-arrow";
+          content:"\e600";
+          line-height:30px;
+          font-size:80%;
+          -webkit-font-smoothing:antialiased;
+          -moz-osx-font-smoothing:grayscale;
+        }
 
-        -webkit-font-smoothing:antialiased;
-        -moz-font-smoothing:grayscale;
-      }
-
-      &.is-inverse{
-        background-color;#555;
-
-        transform:rotateY(180deg);
+       &.is-inverse{
+          background-color:#555;
+          transform:rotateY(180deg);
+        }
       }
     }
+
   }
+
 }
-/*controller-- end*/
+/*controller -- end*/
