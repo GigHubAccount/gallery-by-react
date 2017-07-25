@@ -11,14 +11,13 @@ one photo gallery project based on react.
 3、npm start而不是grunt serve启动服务器。<br>
 4、npm run serve:dist 而不是 grunt serve:dist。（命令都在package.json的script对象中）<br>
 5、需要修改配置一般都在cfg文件夹的defaults.js文件中。如<br>
-    导入字体其添加的为代码：
-    {
-     test: /\.(`png|jpg|gif|woff|woff2|eot|ttf`)$/,
-     loader: 'url-loader?limit=8192'
-     },
-       
-        发布网页修改资源路径：  
-module.exports = {  
+    导入字体其添加的为代码：  
+{  
+  test: /\.(`png|jpg|gif|woff|woff2|eot|ttf`)$/,  
+  loader: 'url-loader?limit=8192'  
+ },  
+    发布网页修改资源路径：  
+module.exports = {  
     　srcPath: srcPath,  
     　publicPath: '`gallery-by-react`/assets/',  
     　port: dfltPort,  
