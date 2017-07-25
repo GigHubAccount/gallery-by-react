@@ -3,7 +3,7 @@ require('styles/App.scss');
 import React from 'react';
 import ReactDOM from 'react-dom';
 //获取图片相关的数据
-var imageDatas=require('../data/imageDatas.json');
+var imageDatas=require('../data/imageDatas.json');//不一样
 
 //利用自执行函数，将图片名信息转出图片URL路径信息,因为只执行一次，所以使用自执行函数
 imageDatas =(function genImageURL(imageDataArr) {
@@ -24,7 +24,7 @@ imageDatas =(function genImageURL(imageDataArr) {
  * @return {[type]}      [description]
  */
 function getRangeRandom(low,high) {
-	return Math.floor((Math.random()*(high-low)+low));
+	return Math.floor(Math.random()*(high-low)+low);
 }
 
 /**
@@ -47,7 +47,6 @@ var ImgFigure =React.createClass({
 		}else{
 			this.props.center();
 		}
-		//this.props.inverse();//在看看
 		e.stopPropagation();
 		e.preventDefault();
 	},
@@ -76,7 +75,7 @@ var ImgFigure =React.createClass({
 		}
 
 		var imgFigureClassName='img-figure';
-			imgFigureClassName+=this.props.arrange.isInverse?' is-inverse':' ';
+			imgFigureClassName+=this.props.arrange.isInverse?' is-inverse':'';
 
 		if(this.props.arrange.isCenter){
 			styleObj.zIndex=11;
@@ -110,7 +109,6 @@ class ControllerUnit extends React.Component{
 	}
 
 	handleClick(e){
-		//if(this.props.isCenter){//不一样
 		//如果点击的是当前正在选中的按钮，则翻转图片，否则将对应的图片的居中
 		if(this.props.arrange.isCenter){
 			this.props.inverse();
@@ -122,22 +120,22 @@ class ControllerUnit extends React.Component{
 	}
 
 	render(){
-		let controlerUnitClassName='controller-unit';
+		let controllerUnitClassName='controller-unit';
 
 		//对应的图片如果居中，则按钮居中
 		if(this.props.arrange.isCenter){
-			//controllerName+=this.props.isCenter?' is-center':' ';
-			controlerUnitClassName+=' is-center';
+			//controllerName+=this.props.isCenter?' is-center':'';
+			controllerUnitClassName+=' is-center';//????
 
 			//对应的图片翻转，则按钮旋转
 			if(this.props.arrange.isInverse){
-				//controllerName+=this.props.arrange.isInverse?' is-inverse':' ';
-				controlerUnitClassName+=' is-inverse';
+				//controllerName+=this.props.arrange.isInverse?' is-inverse':'';
+				controllerUnitClassName+=' is-inverse';//?????
 			}
 		}
 
 		return(
-			<span className={controlerUnitClassName} onClick={this.handleClick}></span>
+			<span className={controllerUnitClassName} onClick={this.handleClick}></span>
 		);
 	}
 }
@@ -146,19 +144,6 @@ class ControllerUnit extends React.Component{
 
 
 class AppComponent extends React.Component{
-	/*getInitialState(){
-		return{
-			imgsArrangeArr:[
-				{
-					pos:{
-						left:'0',
-						top:'0'
-					}
-				}
-			]
-		};
-	}*/
-
 	constructor(props){
 		super(props);
 		this.state={
@@ -310,15 +295,15 @@ class AppComponent extends React.Component{
 		let stageDOM=ReactDOM.findDOMNode(this.refs.stage),
 			stageW=stageDOM.scrollWidth,
 			stageH=stageDOM.scrollHeight,
-			halfStageW=Math.floor(stageW/2),
-			halfStageH=Math.floor(stageH/2);
+			halfStageW=Math.ceil(stageW/2),//???
+			halfStageH=Math.ceil(stageH/2);//???
 
 		//获取imgFigure的大小
 		let imgFigureDOM=ReactDOM.findDOMNode(this.refs.imgFigure0),
 			imgW=imgFigureDOM.scrollWidth,
 			imgH=imgFigureDOM.scrollHeight,
-			halfImgW=Math.floor(imgW/2),
-			halfImgH=Math.floor(imgH/2);
+			halfImgW=Math.ceil(imgW/2),//???
+			halfImgH=Math.ceil(imgH/2);//???
 
 		//计算中心图片的位置
 		this.Constant.centerPos={
@@ -330,18 +315,20 @@ class AppComponent extends React.Component{
 		//计算左右区域的位置
 		this.Constant.hPosRange.leftSecX[0]=-halfImgW;
 		this.Constant.hPosRange.leftSecX[1]=halfStageW-halfImgW*3;
+
 		this.Constant.hPosRange.rightSecX[0]=halfStageW+halfImgW;
 		this.Constant.hPosRange.rightSecX[1]=stageW-halfImgW;
+
 		this.Constant.hPosRange.y[0]=-halfImgH;
-		this.Constant.hPosRange.y[1]=stageH-halfImgH;//不一样用的是halfStageH-halfImgH
+		this.Constant.hPosRange.y[1]=stageH-halfImgH;
 
 		//计算上区域的位置
 		this.Constant.vPosRange.topY[0]=-halfImgH;
 		this.Constant.vPosRange.topY[1]=halfStageH-halfImgH*3;
 		this.Constant.vPosRange.x[0]=halfStageW-imgW;
 		this.Constant.vPosRange.x[1]=halfStageW;
-		
-		this.rearrange(0);
+		//??????????????????????????????????????????????????????
+		this.rearrange(0);//?????????????????
 	}
 
   render(){
@@ -367,7 +354,7 @@ class AppComponent extends React.Component{
   		controllerUnits.push(<ControllerUnit key={index} arrange={this.state.imgsArrangeArr[index]}
   			inverse={this.inverse(index)} center={this.center(index)} />);
 
-  		}.bind(this));//bind把react conponent对象传到这里
+  		}.bind(this));//bind把react conponent对象传到这里??????????
 
     return (
     	//舞台结构
